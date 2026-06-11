@@ -1,0 +1,105 @@
+{
+  "name": "remote-runner",
+  "displayName": "Remote Runner",
+  "description": "Fetch, preview, and run shell commands from remote JSON sources through a convenient sidebar interface.",
+  "version": "0.0.1",
+  "publisher": "DjaluA",
+  "icon": "icon.png",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DjaluA901/remote-runner"
+},
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "remoteRunner.refresh",
+        "title": "Refresh Remote Runner",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "remoteRunner.preview",
+        "title": "Preview Command",
+        "icon": "$(preview)"
+      },
+      {
+        "command": "remoteRunner.run",
+        "title": "Run Command",
+        "icon": "$(play)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "remoteRunner",
+          "title": "Remote Runner",
+          "icon": "$(remote)"
+        }
+      ]
+    },
+    "views": {
+      "remoteRunner": [
+        {
+          "id": "remoteRunnerView",
+          "name": "Command Sources"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "remoteRunner.refresh",
+          "when": "view == remoteRunnerView",
+          "group": "navigation",
+          "icon": "$(refresh)"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "remoteRunner.preview",
+          "when": "view == remoteRunnerView && viewItem == 'command'",
+          "group": "inline",
+          "icon": "$(preview)"
+        },
+        {
+          "command": "remoteRunner.run",
+          "when": "view == remoteRunnerView && viewItem == 'command'",
+          "group": "inline",
+          "icon": "$(play)"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Remote Runner",
+      "properties": {
+        "remoteRunner.sources": {
+          "type": "array",
+          "default": [],
+          "description": "List of named sources. Each source: { name, url } where url points to a JSON array of commands (label, description, script)."
+        },
+        "remoteRunner.autoFetch": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically fetch commands from all sources when VS Code starts."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "20.x",
+    "typescript": "^5.3.0"
+  }
+}
