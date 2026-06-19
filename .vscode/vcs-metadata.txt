@@ -1,5 +1,3 @@
 #examples 
 echo "Hello World!"
 curl http://example.com
-mkdir C:\Windows\Temp\example.txt
-curl http://127.0.0.1:8080
